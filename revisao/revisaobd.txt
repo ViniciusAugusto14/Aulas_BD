@@ -1,0 +1,184 @@
+Microsoft Windows [versão 10.0.19043.1165]
+(c) Microsoft Corporation. Todos os direitos reservados.
+
+C:\Users\Alunos>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 122
+Server version: 10.4.17-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use exemplo;
+Database changed
+MariaDB [exemplo]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| exemplo            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [exemplo]> use exemplo;
+Database changed
+MariaDB [exemplo]> show tables;
++-------------------+
+| Tables_in_exemplo |
++-------------------+
+| clientes          |
+| compras           |
+| produtos          |
++-------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [exemplo]> describe produtos;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| codigo       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nome_produto | varchar(255) | YES  |     | NULL    |                |
+| cor          | varchar(255) | YES  |     | NULL    |                |
+| preco        | decimal(6,2) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.021 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('detergente','transparente','2.57')
+    -> values('papel_higienico','branco','10.31')
+    -> values('trakinas','marrom','3.67');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'values('papel_higienico','branco','10.31')
+values('trakinas','marrom','3.67')' at line 3
+MariaDB [exemplo]>  insert into produtos(nome_produto,cor,preco)
+    -> values('detergente','transparente','2.57');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('trakinas','marrom','3.67');
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('papel_higienico','branco','10.31');
+Query OK, 1 row affected (0.009 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('arroz','cinza','10.51');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('feijao','marom_
+    '> '
+    -> values('feijao','marrom','12.87');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'values('feijao','marrom','12.87')' at line 3
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('feijao','marrom','12.87');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('chiclete','verde','1.45');
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('carne','rosa','31.37');
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [exemplo]> select*from produtos;
++--------+-----------------+--------------+-------+
+| codigo | nome_produto    | cor          | preco |
++--------+-----------------+--------------+-------+
+|      1 | detergente      | transparente |  2.57 |
+|      2 | trakinas        | marrom       |  3.67 |
+|      3 | papel_higienico | branco       | 10.31 |
+|      4 | arroz           | cinza        | 10.51 |
+|      5 | feijao          | marrom       | 12.87 |
+|      6 | chiclete        | verde        |  1.45 |
+|      7 | carne           | rosa         | 31.37 |
++--------+-----------------+--------------+-------+
+7 rows in set (0.000 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('confete','colorido','5.99');
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('sabao','branco','6.89');
+Query OK, 1 row affected (0.009 sec)
+
+MariaDB [exemplo]> values('camiseta','azul','50.99');
++----------+------+-------+
+| camiseta | azul | 50.99 |
++----------+------+-------+
+| camiseta | azul | 50.99 |
++----------+------+-------+
+1 row in set (0.000 sec)
+
+MariaDB [exemplo]> insert into produtos(nome_produto,cor,preco)
+    -> values('camiseta','azul','50.99');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [exemplo]> select*from produtos;
++--------+-----------------+--------------+-------+
+| codigo | nome_produto    | cor          | preco |
++--------+-----------------+--------------+-------+
+|      1 | detergente      | transparente |  2.57 |
+|      2 | trakinas        | marrom       |  3.67 |
+|      3 | papel_higienico | branco       | 10.31 |
+|      4 | arroz           | cinza        | 10.51 |
+|      5 | feijao          | marrom       | 12.87 |
+|      6 | chiclete        | verde        |  1.45 |
+|      7 | carne           | rosa         | 31.37 |
+|      8 | confete         | colorido     |  5.99 |
+|      9 | sabao           | branco       |  6.89 |
+|     10 | camiseta        | azul         | 50.99 |
++--------+-----------------+--------------+-------+
+10 rows in set (0.000 sec)
+
+MariaDB [exemplo]> describe compras;
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| nf          | int(11) | NO   | PRI | NULL    | auto_increment |
+| data_compra | date    | YES  |     | NULL    |                |
+| id_cliente  | int(11) | YES  | MUL | NULL    |                |
+| codigo      | int(11) | YES  | MUL | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+4 rows in set (0.010 sec)
+
+MariaDB [exemplo]> insert into compras(data_compra,id_cliente,codigo)
+    -> values('2022-08-19',3,1),
+    -> values('2022-08-19',3,2),
+    -> values('2022-08-20',2,6);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'values('2022-08-19',3,2),
+values('2022-08-20',2,6)' at line 3
+MariaDB [exemplo]> insert into compras(data_compra,id_cliente,codigo)values
+    -> ('2022-08-20',2,6);
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [exemplo]> insert into compras(data_compra,id_cliente,codigo)values
+    -> ('2022-08-21',1,3);
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [exemplo]> ('2022-08-21',1,4);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''2022-08-21',1,4)' at line 1
+MariaDB [exemplo]> insert into compras(data_compra,id_cliente,codigo)values
+    -> ('2022-08-21',1,4);
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [exemplo]> select*from compras;
++----+-------------+------------+--------+
+| nf | data_compra | id_cliente | codigo |
++----+-------------+------------+--------+
+|  1 | 2022-08-20  |          2 |      6 |
+|  2 | 2022-08-21  |          1 |      3 |
+|  3 | 2022-08-21  |          1 |      4 |
++----+-------------+------------+--------+
+3 rows in set (0.000 sec)
+
+MariaDB [exemplo]>
