@@ -1,0 +1,133 @@
+
+c:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 123
+Server version: 10.4.17-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use revisao;
+Database changed
+MariaDB [revisao]> describe compra;
+ERROR 1146 (42S02): Table 'revisao.compra' doesn't exist
+MariaDB [revisao]> describe compras;
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| nf          | int(11) | NO   | PRI | NULL    | auto_increment |
+| data_compra | date    | YES  |     | NULL    |                |
+| id_cliente  | int(11) | YES  | MUL | NULL    |                |
+| codigo      | int(11) | YES  | MUL | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+4 rows in set (0.018 sec)
+
+MariaDB [revisao]> select p.nome_produto,p.cor
+    -> from produtos as p;
++-----------------+--------------+
+| nome_produto    | cor          |
++-----------------+--------------+
+| CADERNO         | AZUL         |
+| LAPIS COLORIDO  | AMARELO      |
+| BORRACHA        | BRANCA       |
+| REGUA           | TRANSPARENTE |
+| PASTA DE FOLHAS | ROSA         |
+| PEN DRIVE       | PRETO        |
+| FICHARIO        | AZUL         |
++-----------------+--------------+
+7 rows in set (0.000 sec)
+
+MariaDB [revisao]> where p.codigo=com.codigo and
+    -> p.codigo=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'where p.codigo=com.codigo and
+p.codigo=1' at line 1
+MariaDB [revisao]> select com.nf,com.data_compra,p.nome_produto
+    -> from produtos as p,compras as com
+    -> where p.codigo=com.codigo and
+    -> p.codigo=1;
++----+-------------+--------------+
+| nf | data_compra | nome_produto |
++----+-------------+--------------+
+|  1 | 2022-08-18  | CADERNO      |
+|  3 | 2022-08-18  | CADERNO      |
++----+-------------+--------------+
+2 rows in set (0.001 sec)
+
+MariaDB [revisao]> select *from produtos
+    -> where cor like 'azul';
++--------+--------------+------+-------+
+| codigo | nome_produto | cor  | preco |
++--------+--------------+------+-------+
+|      1 | CADERNO      | AZUL | 15.75 |
+|      7 | FICHARIO     | AZUL | 15.00 |
++--------+--------------+------+-------+
+2 rows in set (0.000 sec)
+
+MariaDB [revisao]> select * from produtos
+    -> where preco > 10.00;
++--------+--------------+-------+-------+
+| codigo | nome_produto | cor   | preco |
++--------+--------------+-------+-------+
+|      1 | CADERNO      | AZUL  | 15.75 |
+|      6 | PEN DRIVE    | PRETO | 34.20 |
+|      7 | FICHARIO     | AZUL  | 15.00 |
++--------+--------------+-------+-------+
+3 rows in set (0.000 sec)
+
+MariaDB [revisao]> select * from produtos
+    -> where preco between 0.50 and 2.00;
++--------+----------------+---------+-------+
+| codigo | nome_produto   | cor     | preco |
++--------+----------------+---------+-------+
+|      2 | LAPIS COLORIDO | AMARELO |  0.99 |
+|      3 | BORRACHA       | BRANCA  |  1.50 |
++--------+----------------+---------+-------+
+2 rows in set (0.000 sec)
+
+MariaDB [revisao]> update produtos
+    -> set preco * 1.1
+    -> where codigo=3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '* 1.1
+where codigo=3' at line 2
+MariaDB [revisao]> update produtos
+    -> set preco=preco * 1.1
+    -> where codigo=3;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [revisao]> select * from produtos;
++--------+-----------------+--------------+-------+
+| codigo | nome_produto    | cor          | preco |
++--------+-----------------+--------------+-------+
+|      1 | CADERNO         | AZUL         | 15.75 |
+|      2 | LAPIS COLORIDO  | AMARELO      |  0.99 |
+|      3 | BORRACHA        | BRANCA       |  1.65 |
+|      4 | REGUA           | TRANSPARENTE |  5.32 |
+|      5 | PASTA DE FOLHAS | ROSA         |  8.50 |
+|      6 | PEN DRIVE       | PRETO        | 34.20 |
+|      7 | FICHARIO        | AZUL         | 15.00 |
++--------+-----------------+--------------+-------+
+7 rows in set (0.001 sec)
+
+MariaDB [revisao]> update produtos
+    -> set nome_produto='regua de 30 cm'
+    -> where codigo=4;
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [revisao]> select * from produtos;
++--------+-----------------+--------------+-------+
+| codigo | nome_produto    | cor          | preco |
++--------+-----------------+--------------+-------+
+|      1 | CADERNO         | AZUL         | 15.75 |
+|      2 | LAPIS COLORIDO  | AMARELO      |  0.99 |
+|      3 | BORRACHA        | BRANCA       |  1.65 |
+|      4 | regua de 30 cm  | TRANSPARENTE |  5.32 |
+|      5 | PASTA DE FOLHAS | ROSA         |  8.50 |
+|      6 | PEN DRIVE       | PRETO        | 34.20 |
+|      7 | FICHARIO        | AZUL         | 15.00 |
++--------+-----------------+--------------+-------+
+7 rows in set (0.000 sec)
+
+MariaDB [revisao]>
